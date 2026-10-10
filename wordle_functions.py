@@ -1,9 +1,6 @@
 """
 choose_word() – Selects and returns a secret word.
 • get_guess() – Gets and validates the player’s guess.
-• evaluate_guess() – Compares the guess with the secret word and returns feedback.
-• display_guess() – Displays the guess and its feedback.
-• has_won() – Determines whether the player has guessed the word.
 """
 
 """
@@ -24,23 +21,25 @@ def choose_word() :
 
     # Picks one word randomly from the list
     random_word = random.choice(word_list)
-    print(random_word)
 
     return random_word
 
 def get_guess() :
     user_word = input("Guess: ").upper()
+    # Makes sure guess is the right length
     if (len(user_word) == 5) :
         return user_word
     else :
-        print("Only 5 letter word guesses please. Guess again.")
+        print("\nOnly 5 letter word guesses please. Guess again.")
         get_guess()
         
 
 def evaluate_guess(user_word, random_word) :
+    # Lists to split the guesses into, and one to store the # of correct answers
     user_letters = [] 
     random_letters = []
-    correct_letters = []
+    feedback = []
+    
     # Separates words into lists
     for letters in user_word :
         user_letters.append(letters)
@@ -56,85 +55,41 @@ def evaluate_guess(user_word, random_word) :
             # Checks if letter from first loop is same as letter in second loop
             if user_letters[u_letters] == random_letters[r_letters] :
                 
-                # Checks if matching letters are from the same index
+                # Checks if matching letters are from the same index. If so, appends G to feedback
                 if user_letters[u_letters] == random_letters[u_letters] :
-                    correct_letters.append("G")
+                    feedback.append("G")
                     letter_added = True
+                # If not, append Y to feedback
                 else :
-                    correct_letters.append("Y")
+                    feedback.append("Y")
                     letter_added = True
             
-        # If not G or Y, add -
+        # If not G or Y, append - to feedback
         if not letter_added :
-            correct_letters.append("-")
+            feedback.append("-")
             
-    return correct_letters
+    return feedback
         
-    """# Check for green and yellow letters
-            for index, u_letters in enumerate(user_letters) :
-                letter_added = False
-                for r_letters in random_letters :
-                    if u_letters == r_letters :
-                        print(u_letters, random_letters[index])
-                        if u_letters == random_letters[index] :
-                            correct_letters.append(" G ")
-                            print(u_letters, random_letters[index])
-                            letter_added = True
-                        else :
-                            print(u_letters, random_letters[index])
-                            correct_letters.append(" Y ")
-                            letter_added = True
-                if not letter_added :
-                    print(u_letters, random_letters[index])
-                    correct_letters.append(" - ")
-            return correct_letters"""
-    """
-    # Check for green and yellow letters
-       for r_letters in random_letters :
-           letter_added = False
-           for index, u_letters in enumerate(user_letters) :
-               if u_letters == r_letters :
-                   print(r_letters, user_letters[index])
-                   if r_letters == user_letters[index] :
-                       correct_letters.append(" G ")
-                       print(u_letters, random_letters[index])
-                       letter_added = True
-                   else :
-                       print(u_letters, random_letters[index])
-                       correct_letters.append(" Y ")
-                       letter_added = True
-           if not letter_added :
-               print(print(r_letters, random_letters[index]))
-               correct_letters.append(" - ")
-       return correct_letters
-   """
-   
-            
-                    
-            
-    
-    #Checks for yellow letters
-        
-    
 
-
-
-def display_guess(correct_letters, user_word) :
+def display_guess(feedback, user_word) :
+    # Prints user guess
     print(f"\nYour Guess: {user_word[0]} {user_word[1]} {user_word[2]} {user_word[3]} {user_word[4]}")
-    print(f"Feedback:   {correct_letters[0]} {correct_letters[1]} {correct_letters[2]} {correct_letters[3]} {correct_letters[4]}")
+    # Prints feedback
+    print(f"Feedback:   {feedback[0]} {feedback[1]} {feedback[2]} {feedback[3]} {feedback[4]}")
         
     
-
-
 
 def has_won(user_word, random_word) :
+    # Checks if user_word matches random_word (win condition). If so, ends loop
     if user_word == random_word.upper() :
-        print("\nCongratulations! You won!")
+        print("\nCongratulations! You won!\n")
         keep_playing = True
     else:
         keep_playing = False
-        print("Sorry, you lost.")
+        print("\nSorry, you lost.")
+        print(f"The correct answer was: {random_word}\n")
         
+    # Gets input if user wants to play again.
     play_again = input("Would you like to play again? Yes or no? ").upper()
     if play_again == "YES" :
         return True
