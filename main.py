@@ -1,22 +1,3 @@
-"""Import your functions from wordle_functions.py into main.py.
-• Use a list to store previous guesses.
-• Use meaningful variable and function names.
-• Include comments explaining important sections.
-• Do not use classes or advanced Python features we have not discussed."""
-
-"""
-1. Welcome the player.
-
-3. Give the player up to six guesses.
-4. Require each guess to contain exactly five letters.
-5. Reject guesses that have already been used.
-6. Display feedback after every guess.
-7. Tell the player when a letter is correct, misplaced, or absent.
-8. End the game when the player guesses the word or uses all six attempts.
-9. Display the secret word if the player loses.
-10. Ask whether the player would like to play again.
-"""
-
 import wordle_functions
 
 # Variables
@@ -53,8 +34,3 @@ while (keep_playing == True) :
     guesses = 6
     previous_guesses = []
     user_word = "1"
-
-        
-
-
-

@@ -1,19 +1,4 @@
-"""
-choose_word() – Selects and returns a secret word.
-• get_guess() – Gets and validates the player’s guess.
-"""
-
-"""
-
-2. Select a secret five-letter word.
-
-
-
-
-"""
 import random
-
-
 
 def choose_word() :
     #A list of real 5-letter words
@@ -31,8 +16,7 @@ def get_guess() :
         return user_word
     else :
         print("\nOnly 5 letter word guesses please. Guess again.")
-        get_guess()
-        
+        get_guess()     
 
 def evaluate_guess(user_word, random_word) :
     # Lists to split the guesses into, and one to store the # of correct answers
@@ -70,14 +54,11 @@ def evaluate_guess(user_word, random_word) :
             
     return feedback
         
-
 def display_guess(feedback, user_word) :
     # Prints user guess
     print(f"\nYour Guess: {user_word[0]} {user_word[1]} {user_word[2]} {user_word[3]} {user_word[4]}")
     # Prints feedback
     print(f"Feedback:   {feedback[0]} {feedback[1]} {feedback[2]} {feedback[3]} {feedback[4]}")
-        
-    
 
 def has_won(user_word, random_word) :
     # Checks if user_word matches random_word (win condition). If so, ends loop
@@ -91,11 +72,11 @@ def has_won(user_word, random_word) :
         
     # Gets input if user wants to play again.
     play_again = input("Would you like to play again? Yes or no? ").upper()
+    while play_again not in ("YES", "NO") :
+        play_again = input("Invalid response. Please enter yes or no. ").upper()
     if play_again == "YES" :
         return True
     elif play_again == "NO" :
         print("Thanks for playing!")
         return False
-    else :
-        print("Please enter yes or no.")
-        has_won
+        
