@@ -2,7 +2,16 @@ import random
 
 def choose_word() :
     #A list of real 5-letter words
-    word_list = ["apple", "grape", "house", "train", "beach", "smart", "clock"]
+    word_list = [
+    "flour", "grape", "house", "train", "beach", "smart", "cloud",
+    "brick", "plane", "water", "night", "stone", "dream", "flame",
+    "brush", "chair", "lunch", "paint", "money", "ghost", "black",
+    "crane", "pearl", "shirt", "blind", "think", "bread", "fruit",
+    "dance", "horse", "mouse", "sugar", "table", "woman", "spice",
+    "quiet", "glove", "voice", "jumpy", "knife", "plant", "blame",
+    "spoil", "whale", "north", "giant", "flask", "drive", "lemon",
+    "pilot"
+    ]
 
     # Picks one word randomly from the list
     random_word = random.choice(word_list)
@@ -11,14 +20,23 @@ def choose_word() :
 
 def get_guess() :
     user_word = input("Guess: ").upper()
+    
     # Makes sure guess is the right length
     if (len(user_word) == 5) :
         return user_word
+    
+    # Raises exception to get another guess
     else :
-        print("\nOnly 5 letter word guesses please. Guess again.")
-        get_guess()     
+        print("Input must be exactly 5 characters long. Guess again. ")
+        raise ValueError
 
-def evaluate_guess(user_word, random_word) :
+def evaluate_guess(user_word, random_word, previous_guesses) :
+    
+    # Raises exception to get another guess
+    if user_word in previous_guesses :
+        print("You already guessed that. Guess again.")
+        raise ValueError
+    
     # Lists to split the guesses into, and one to store the # of correct answers
     user_letters = [] 
     random_letters = []
@@ -73,7 +91,7 @@ def has_won(user_word, random_word) :
     # Gets input if user wants to play again.
     play_again = input("Would you like to play again? Yes or no? ").upper()
     while play_again not in ("YES", "NO") :
-        play_again = input("Invalid response. Please enter yes or no. ").upper()
+        play_again = input("Yes and no are all I know. Please enter yes or no. ").upper()
     if play_again == "YES" :
         return True
     elif play_again == "NO" :
