@@ -14,6 +14,7 @@ Y = correct letter, wrong position \n- = letter is not in the word")
 # Runs as long as the player agrees to play
 while (keep_playing == True) :
     
+    # Gets random_word
     random_word = wordle_functions.choose_word()
     
     # Runs if there are guesses remaining, and word hasn't been guessed
@@ -22,8 +23,8 @@ while (keep_playing == True) :
         # Tries to get guess and display feedback
         try :
             print(f"\nGuesses remaining: {guesses}")
-            guess = wordle_functions.get_guess()
-            feedback = wordle_functions.evaluate_guess(guess, random_word, previous_guesses)
+            guess = wordle_functions.get_guess(previous_guesses)
+            feedback = wordle_functions.evaluate_guess(guess, random_word)
         
         # Runs if guess != 5 characters or guess has already been guessed
         except ValueError:

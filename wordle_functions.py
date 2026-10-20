@@ -1,5 +1,6 @@
 import random
 
+# Selects and returns a random word.
 def choose_word() :
     #A list of real 5-letter words
     word_list = [
@@ -18,24 +19,26 @@ def choose_word() :
 
     return random_word
 
-def get_guess() :
-    user_word = input("Guess: ").upper()
+# Gets and validates the player’s guess.
+def get_guess(previous_guesses) :
+    guess = input("Guess: ").upper()
     
-    # Makes sure guess is the right length
-    if (len(user_word) == 5) :
-        return user_word
+    # Makes sure guess is the right length and hasn't been guessed yet
+    if (len(guess) == 5) and (guess not in previous_guesses) :
+        return guess
     
-    # Raises exception to get another guess
+    # Raises exception to get another guess if has been guessed
+    elif guess in previous_guesses :
+        print("You already guessed that. Guess again.")
+        raise ValueError
+    
+    # Raises exception to get another guess if guess != 5 characters long
     else :
         print("Input must be exactly 5 characters long. Guess again. ")
         raise ValueError
 
-def evaluate_guess(user_word, random_word, previous_guesses) :
-    
-    # Raises exception to get another guess
-    if user_word in previous_guesses :
-        print("You already guessed that. Guess again.")
-        raise ValueError
+# Compares the guess with the secret word and returns feedback.
+def evaluate_guess(guess, random_word) :
     
     # Lists to split the guesses into, and one to store the # of correct answers
     user_letters = [] 
@@ -43,7 +46,7 @@ def evaluate_guess(user_word, random_word, previous_guesses) :
     feedback = []
     
     # Separates words into lists
-    for letters in user_word :
+    for letters in guess :
         user_letters.append(letters)
     for letters in random_word :
         random_letters.append(letters.upper())
@@ -71,16 +74,18 @@ def evaluate_guess(user_word, random_word, previous_guesses) :
             feedback.append("-")
             
     return feedback
-        
-def display_guess(feedback, user_word) :
+
+# Displays the guess and its feedback.
+def display_guess(feedback, guess) :
     # Prints user guess
-    print(f"\nYour Guess: {user_word[0]} {user_word[1]} {user_word[2]} {user_word[3]} {user_word[4]}")
+    print(f"\nYour Guess: {guess[0]} {guess[1]} {guess[2]} {guess[3]} {guess[4]}")
     # Prints feedback
     print(f"Feedback:   {feedback[0]} {feedback[1]} {feedback[2]} {feedback[3]} {feedback[4]}")
 
-def has_won(user_word, random_word) :
-    # Checks if user_word matches random_word (win condition). If so, ends loop
-    if user_word == random_word.upper() :
+# Determines whether the player has guessed the word.
+def has_won(guess, random_word) :
+    # Checks if guess matches random_word (win condition). If so, ends loop
+    if guess == random_word.upper() :
         print("\nCongratulations! You won!\n")
         keep_playing = True
     else:
